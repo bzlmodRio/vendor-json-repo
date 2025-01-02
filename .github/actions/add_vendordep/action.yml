@@ -78,6 +78,7 @@ runs:
       run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
+        git checkout -b ${{ inputs.pr_branch }}
         git add .
         git commit -m "${{ inputs.pr_title }}"
         git push --set-upstream origin ${{ inputs.pr_branch }} -f
