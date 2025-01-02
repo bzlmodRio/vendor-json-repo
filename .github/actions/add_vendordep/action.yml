@@ -53,14 +53,14 @@ runs:
         VENDORDEP_FILE: ${{ inputs.vendordep_file }}
         IS_BETA: ${{ inputs.is_beta }}
         
-    - name: Create XXX Pull Request
-      uses: peter-evans/create-pull-request@v6
-      with:
-        path: vendor-json-repo
-        base: main
-        branch: ${{ inputs.pr_branch }} 
-        token: ${{ inputs.token }}
-        title:  ${{ inputs.pr_title }}
+    # - name: Create XXX Pull Request
+    #   uses: peter-evans/create-pull-request@v6
+    #   with:
+    #     path: vendor-json-repo
+    #     base: main
+    #     branch: ${{ inputs.pr_branch }} 
+    #     token: ${{ inputs.token }}
+    #     title:  ${{ inputs.pr_title }}
         
     # - name: CreateYYYY Pull Request
     #   uses: peter-evans/create-pull-request@v6
@@ -71,6 +71,16 @@ runs:
     #     branch: ${{ inputs.pr_branch }} 
     #     token: ${{ inputs.token }}
     #     title:  ${{ inputs.pr_title }}
+
+    - name: Commit and push 
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<>"
+        git add .
+        git commit -m "${{ inputs.pr_title }}"
+        git push --set-upstream origin ${{ inputs.pr_branch }} -f
+      env:
+        GH_TOKEN: ${{ inputs.token }}  
 
     - name: Create PR
       shell: bash
